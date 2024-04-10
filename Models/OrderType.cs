@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace HipHopPizza.Models;
 
 public class OrderType

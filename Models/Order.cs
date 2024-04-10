@@ -12,7 +12,7 @@ public class Order
     public decimal Subtotal { get; set; }
     public decimal Tip { get; set; }
     public decimal Total { get; set; }
-    public DateTime OrderDate { get; set; }
+    public DateTime? OrderDate { get; set; }
     public bool IsComplete { get; set; }
 }
 
