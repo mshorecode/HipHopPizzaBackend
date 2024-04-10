@@ -6,7 +6,10 @@ namespace HipHopPizza.API
     {
         public static void Map(WebApplication app)
         {
-            
+            app.MapGet("/orders", (HipHopPizzaDbContext db) =>
+            {
+                return db.Orders.ToList();
+            });
         }
     }
 }
