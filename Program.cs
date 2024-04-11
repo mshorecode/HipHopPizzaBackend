@@ -48,4 +48,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+OrderAPIs.Map(app);
+
 app.Run();
