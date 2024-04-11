@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HipHopPizza.Migrations
 {
     [DbContext(typeof(HipHopPizzaDbContext))]
-    partial class HipHopPizzaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240410231748_OrderItems")]
+    partial class OrderItems
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,6 +140,9 @@ namespace HipHopPizza.Migrations
                     b.Property<decimal>("Tip")
                         .HasColumnType("numeric");
 
+                    b.Property<decimal>("Total")
+                        .HasColumnType("numeric");
+
                     b.HasKey("Id");
 
                     b.ToTable("Orders");
@@ -153,7 +158,8 @@ namespace HipHopPizza.Migrations
                             OrderDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             OrderTypeId = 1,
                             Subtotal = 10m,
-                            Tip = 10m
+                            Tip = 10m,
+                            Total = 20m
                         },
                         new
                         {
@@ -165,7 +171,8 @@ namespace HipHopPizza.Migrations
                             OrderDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             OrderTypeId = 2,
                             Subtotal = 22m,
-                            Tip = 5m
+                            Tip = 5m,
+                            Total = 27m
                         },
                         new
                         {
@@ -177,7 +184,8 @@ namespace HipHopPizza.Migrations
                             OrderDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             OrderTypeId = 1,
                             Subtotal = 26m,
-                            Tip = 8m
+                            Tip = 8m,
+                            Total = 34m
                         },
                         new
                         {
@@ -189,7 +197,8 @@ namespace HipHopPizza.Migrations
                             OrderDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             OrderTypeId = 2,
                             Subtotal = 15m,
-                            Tip = 2m
+                            Tip = 2m,
+                            Total = 17m
                         });
                 });
 

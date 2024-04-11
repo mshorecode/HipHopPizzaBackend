@@ -35,10 +35,10 @@ public class HipHopPizzaDbContext : DbContext
 
         modelBuilder.Entity<Order>().HasData(new Order[]
         {
-            new Order { Id = 1, CustomerName = "Johnny Saniat", CustomerEmail = "johnnyyourmomcalled@johnnybusiness.net", CustomerPhone = 615 - 555 - 5512, OrderTypeId = 1, Subtotal = 10, Tip = 10, Total = 20, OrderDate = new DateTime(), IsComplete = true },
-            new Order { Id = 2, CustomerName = "Keana Cobarde", CustomerEmail = "keanabusiness@gmail.com", CustomerPhone = 615 - 555 - 1255, OrderTypeId = 2, Subtotal = 22, Tip = 5, Total = 27, OrderDate = new DateTime(), IsComplete = true },
-            new Order { Id = 3, CustomerName = "Greg Markus", CustomerEmail = "uevadrankbaileys4rmashu@yahoo.com", CustomerPhone = 615-555-2782, OrderTypeId = 1, Subtotal = 26, Tip = 8, Total = 34, OrderDate = new DateTime(), IsComplete = false },
-            new Order { Id = 4, CustomerName = "Ryan Shore", CustomerEmail = "number1grump@outlook.com", CustomerPhone = 615-555-7893, OrderTypeId = 2, Subtotal = 15, Tip = 2, Total = 17, OrderDate = new DateTime(), IsComplete = false },
+            new Order { Id = 1, CustomerName = "Johnny Saniat", CustomerEmail = "johnnyyourmomcalled@johnnybusiness.net", CustomerPhone = "615-555-5512", OrderTypeId = 1, Tip = 10, OrderDate = new DateTime(), IsComplete = true },
+            new Order { Id = 2, CustomerName = "Keana Cobarde", CustomerEmail = "keanabusiness@gmail.com", CustomerPhone = "615-555-1255", OrderTypeId = 2, Tip = 5, OrderDate = new DateTime(), IsComplete = true },
+            new Order { Id = 3, CustomerName = "Greg Markus", CustomerEmail = "uevadrankbaileys4rmashu@yahoo.com", CustomerPhone = "615-555-2782", OrderTypeId = 1, Tip = 8, OrderDate = new DateTime(), IsComplete = false },
+            new Order { Id = 4, CustomerName = "Ryan Shore", CustomerEmail = "number1grump@outlook.com", CustomerPhone = "615-555-7893", OrderTypeId = 2, Tip = 2, OrderDate = new DateTime(), IsComplete = false },
         });
     }
 }

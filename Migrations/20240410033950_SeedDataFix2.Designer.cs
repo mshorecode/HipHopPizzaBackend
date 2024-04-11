@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HipHopPizza.Migrations
 {
     [DbContext(typeof(HipHopPizzaDbContext))]
-    partial class HipHopPizzaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240410033950_SeedDataFix2")]
+    partial class SeedDataFix2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,6 +140,9 @@ namespace HipHopPizza.Migrations
                     b.Property<decimal>("Tip")
                         .HasColumnType("numeric");
 
+                    b.Property<decimal>("Total")
+                        .HasColumnType("numeric");
+
                     b.HasKey("Id");
 
                     b.ToTable("Orders");
@@ -153,7 +158,8 @@ namespace HipHopPizza.Migrations
                             OrderDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             OrderTypeId = 1,
                             Subtotal = 10m,
-                            Tip = 10m
+                            Tip = 10m,
+                            Total = 20m
                         },
                         new
                         {
@@ -165,7 +171,8 @@ namespace HipHopPizza.Migrations
                             OrderDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             OrderTypeId = 2,
                             Subtotal = 22m,
-                            Tip = 5m
+                            Tip = 5m,
+                            Total = 27m
                         },
                         new
                         {
@@ -177,7 +184,8 @@ namespace HipHopPizza.Migrations
                             OrderDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             OrderTypeId = 1,
                             Subtotal = 26m,
-                            Tip = 8m
+                            Tip = 8m,
+                            Total = 34m
                         },
                         new
                         {
@@ -189,31 +197,9 @@ namespace HipHopPizza.Migrations
                             OrderDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             OrderTypeId = 2,
                             Subtotal = 15m,
-                            Tip = 2m
+                            Tip = 2m,
+                            Total = 17m
                         });
-                });
-
-            modelBuilder.Entity("HipHopPizza.Models.OrderItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ItemId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ItemId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("OrderItem");
                 });
 
             modelBuilder.Entity("HipHopPizza.Models.OrderType", b =>
@@ -264,35 +250,6 @@ namespace HipHopPizza.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("HipHopPizza.Models.OrderItem", b =>
-                {
-                    b.HasOne("HipHopPizza.Models.Item", "Item")
-                        .WithMany("Orders")
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HipHopPizza.Models.Order", "Order")
-                        .WithMany("Items")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Item");
-
-                    b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("HipHopPizza.Models.Item", b =>
-                {
-                    b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("HipHopPizza.Models.Order", b =>
-                {
-                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }
