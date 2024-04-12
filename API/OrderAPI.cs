@@ -1,6 +1,5 @@
 using HipHopPizza.Models;
 using HipHopPizza.DTO;
-using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 
 namespace HipHopPizza.API
@@ -59,15 +58,19 @@ namespace HipHopPizza.API
                 };
 
                 order.Items.Add(orderItem);
-
                 await db.SaveChangesAsync();
-
                 return Results.Ok();
             });
 
             app.MapPost("/order/removeitem", async (HipHopPizzaDbContext db, AddItemDto addItemDto) =>
             {
-
+                Order order = await db.Orders.FirstOrDefaultAsync(x => x.Id == addItemDto.OrderId);
+                Item item = await db.Items.FirstOrDefaultAsync(x => x.Id == addItemDto.ItemId);
+                OrderItem orderItem = await db.OrderItems.FirstOrDefaultAsync(x => x.Item.Id == item.Id && x.Order.Id == order.Id);
+                
+                order.Items.Remove(orderItem);
+                await db.SaveChangesAsync();
+                return Results.Ok();
             });
         }
     }
