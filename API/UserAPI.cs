@@ -1,6 +1,5 @@
 using HipHopPizza.Models;
 using HipHopPizza.DTO;
-using Microsoft.EntityFrameworkCore;
 
 namespace HipHopPizza.API
 {
@@ -8,18 +7,25 @@ namespace HipHopPizza.API
     {
         public static void Map(WebApplication app)
         {
-            app.MapPost("/checkuser", (HipHopPizzaDbContext db, UserAuthDto userAuthDto) =>
+            app.MapPost("/checkuser", (HipHopPizzaDbContext db, User user) =>
             {
-                var userUid = db.Users.SingleOrDefault(user => user.Uid == userAuthDto.Uid);
+                var userUid = db.Users.SingleOrDefault(u => u.Uid == user.Uid);
 
-                return userUid == null ? Results.NotFound() : Results.Ok(userUid);
-            });
-            
-            app.MapPost("/register", (HipHopPizzaDbContext db, User user) =>
-            {
-                db.Users.Add(user);
+                if (userUid != null)
+                {
+                    return Results.Ok(userUid);
+                }
+
+                User response = new User
+                {
+                    DisplayName = user.DisplayName,
+                    Uid = user.Uid
+                };
+                
+                db.Users.Add(response);
                 db.SaveChanges();
-                return Results.Created($"/user/{user.Id}", user);
+
+                return Results.Ok(response);
             });
         }
     }
