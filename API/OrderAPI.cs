@@ -21,6 +21,12 @@ namespace HipHopPizza.API
                          .SingleOrDefault(order => order.Id == id);
             });
 
+            app.MapGet("/order/items/{id}", (HipHopPizzaDbContext db, int id) =>
+            {
+                var order = db.Orders.Include(order => order.Items).SingleOrDefault(order => order.Id == id);
+                return order.Items.ToList();
+            });
+
             app.MapPost("/orders", (HipHopPizzaDbContext db, Order order) =>
             {
                 db.Orders.Add(order);
