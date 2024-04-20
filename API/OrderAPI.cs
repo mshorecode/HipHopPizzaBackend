@@ -67,10 +67,25 @@ namespace HipHopPizza.API
                 Order order = await db.Orders.FirstOrDefaultAsync(x => x.Id == addItemDto.OrderId);
                 Item item = await db.Items.FirstOrDefaultAsync(x => x.Id == addItemDto.ItemId);
                 OrderItem orderItem = await db.OrderItems.FirstOrDefaultAsync(x => x.Item.Id == item.Id && x.Order.Id == order.Id);
-                
+
                 order.Items.Remove(orderItem);
                 await db.SaveChangesAsync();
                 return Results.Ok();
+            });
+
+            app.MapPatch("/order/{id}/addtip", (HipHopPizzaDbContext db, int id, AddTipDto addTipDto) =>
+            {
+                var orderToUpdate = db.Orders.SingleOrDefault(x => x.Id == id);
+
+                if (orderToUpdate == null)
+                {
+                    return Results.NotFound();
+                }
+
+                if (addTipDto.Tip != 0) orderToUpdate.Tip = addTipDto.Tip;
+
+                db.SaveChanges();
+                return Results.NoContent();
             });
         }
     }
