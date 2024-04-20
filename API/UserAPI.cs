@@ -27,6 +27,13 @@ namespace HipHopPizza.API
 
                 return Results.Ok(response);
             });
+
+            app.MapGet("/user/{id}", (HipHopPizzaDbContext db, int id) =>
+            {
+                var user = db.Users.SingleOrDefault(u => u.Id == id);
+
+                return user;
+            });
         }
     }
 }
