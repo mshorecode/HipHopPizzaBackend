@@ -21,10 +21,21 @@ namespace HipHopPizza.API
                          .SingleOrDefault(order => order.Id == id);
             });
 
-            app.MapGet("/order/items/{id}", (HipHopPizzaDbContext db, int id) =>
+            app.MapGet("/order/items/{id}", async (HipHopPizzaDbContext db, int id) =>
             {
-                var order = db.Orders.Include(order => order.Items).SingleOrDefault(order => order.Id == id);
-                return order.Items.ToList();
+                var order = await db.Orders
+                    .Include(order => order.Items)
+                    .ThenInclude(orderItem => orderItem.Item)
+                    .SingleOrDefaultAsync(order => order.Id == id);
+
+                var items = order.Items.Select( item => new
+                {
+                    id = item.Item.Id,
+                    name = item.Item.Name,
+                    price = item.Item.Price,
+                }).ToArray();
+                
+                return Results.Ok(items);
             });
 
             app.MapPost("/orders", (HipHopPizzaDbContext db, Order order) =>
@@ -92,6 +103,16 @@ namespace HipHopPizza.API
 
                 db.SaveChanges();
                 return Results.NoContent();
+            });
+
+            app.MapGet("/revenue", async (HipHopPizzaDbContext db) =>
+            {
+                var totalSum = await db.Orders
+                    .Where(order => order.IsComplete)
+                    .Select(order => order.Total)
+                    .SumAsync();
+
+                return Results.Ok(new { TotalSum = totalSum });
             });
         }
     }
